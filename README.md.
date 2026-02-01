@@ -50,4 +50,5 @@ This task automatically extracts emission-reduction commitments from a sustainab
 ```bash
 pip install -r requirements.txt
 python task1_emission_prediction.py
+
 python task2_commitment_extraction.py
