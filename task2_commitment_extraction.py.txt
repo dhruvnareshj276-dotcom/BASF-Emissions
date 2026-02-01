@@ -1,0 +1,39 @@
+import re
+import pdfplumber
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Extract text from PDF
+text = ""
+with pdfplumber.open("BASF_Sustainability_Report.pdf") as pdf:
+    for page in pdf.pages:
+        if page.extract_text():
+            text += page.extract_text() + "\n"
+
+# Clean text
+clean_text = re.sub(r'[^a-zA-Z0-9\s\-]', '', text.lower())
+sentences = [s.strip() for s in clean_text.split('\n') if s.strip()]
+
+# Keyword Filtering
+keywords = ["co2", "emission", "emissions", "net-zero", "scope 1", "scope 2", "scope 3", "reduce"]
+keyword_sentences = [s for s in sentences if any(k in s for k in keywords)]
+
+# TF-IDF Scoring
+vectorizer = TfidfVectorizer(stop_words='english')
+tfidf_matrix = vectorizer.fit_transform(sentences)
+important_terms = ["emission", "co2", "net-zero", "scope", "reduce"]
+
+scores = []
+for i, sentence in enumerate(sentences):
+    score = sum(tfidf_matrix[i, vectorizer.vocabulary_.get(term, 0)] for term in important_terms if term in vectorizer.vocabulary_)
+    scores.append(score)
+
+tfidf_df = pd.DataFrame({"Sentence": sentences, "Score": scores}).sort_values(by="Score", ascending=False)
+print(tfidf_df.head())
+
+# Extract Commitments
+pattern = r"(reduce.*?\d+%.*?\d{4}|net-zero.*?\d{4})"
+commitments = [s for s in keyword_sentences if re.search(pattern, s)]
+print("\nExtracted Commitments:")
+for c in commitments:
+    print("-", c)
