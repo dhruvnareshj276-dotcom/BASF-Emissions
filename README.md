@@ -2,7 +2,7 @@
 
 This repository contains a two-part sustainability analytics project:
 
-## 📊 Task 1 — Emission Prediction Using Machine Learning
+##  Task 1 — Emission Prediction Using Machine Learning
 
 We use the EDGAR CO₂ emissions dataset to predict future emissions trends using historical data.
 
@@ -21,7 +21,7 @@ We use the EDGAR CO₂ emissions dataset to predict future emissions trends usin
 
 ---
 
-## 🌍 Task 2 — ESG Commitment Extraction (NLP)
+##  Task 2 — ESG Commitment Extraction (NLP)
 
 This task automatically extracts emission-reduction commitments from a sustainability report PDF.
 
@@ -35,7 +35,7 @@ This task automatically extracts emission-reduction commitments from a sustainab
 
 ---
 
-## 🗂 Data Sources
+## Data Sources
 
 - EDGAR CO₂ Dataset:  
   https://github.com/openclimatedata/edgar-co2-emissions
@@ -45,10 +45,11 @@ This task automatically extracts emission-reduction commitments from a sustainab
 
 ---
 
-## 🚀 How to Run
+##  How to Run
 
 ```bash
 pip install -r requirements.txt
 python task1_emission_prediction.py
 
 python task2_commitment_extraction.py
+
